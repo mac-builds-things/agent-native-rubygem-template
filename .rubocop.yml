@@ -1,0 +1,75 @@
+# .rubocop.yml — Rubocop configuration for my_gem
+#
+# Targets Ruby 3.1+. Enforces the community style guide with a few
+# pragmatic relaxations for gem development.
+
+require:
+  - rubocop-rspec
+  - rubocop-rake
+
+AllCops:
+  NewCops: enable
+  TargetRubyVersion: 3.1
+  SuggestExtensions: false
+  Exclude:
+    - "vendor/**/*"
+    - "doc/**/*"
+    - "tmp/**/*"
+    - "*.gemspec"      # gemspec has its own style constraints
+
+# ── Layout ────────────────────────────────────────────────────────────────────
+Layout/LineLength:
+  Max: 120
+  AllowedPatterns:
+    - '\A\s*#'         # long comment lines are fine
+
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: indented
+
+# ── Metrics ───────────────────────────────────────────────────────────────────
+Metrics/BlockLength:
+  Exclude:
+    - "spec/**/*"      # RSpec describe/context blocks are naturally long
+    - "Rakefile"
+
+Metrics/MethodLength:
+  Max: 20
+
+Metrics/ClassLength:
+  Max: 150
+
+# ── Naming ────────────────────────────────────────────────────────────────────
+Naming/FileName:
+  ExpectMatchingDefinition: false  # allow snake_case filenames for modules
+
+# ── Style ─────────────────────────────────────────────────────────────────────
+Style/Documentation:
+  Enabled: true
+  Exclude:
+    - "spec/**/*"
+
+Style/FrozenStringLiteralComment:
+  Enabled: true
+  EnforcedStyle: always
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+Style/TrailingCommaInArrayLiteral:
+  EnforcedStyleForMultiline: consistent_comma
+
+Style/TrailingCommaInHashLiteral:
+  EnforcedStyleForMultiline: consistent_comma
+
+# ── RSpec ─────────────────────────────────────────────────────────────────────
+RSpec/ExampleLength:
+  Max: 15
+
+RSpec/MultipleExpectations:
+  Max: 5
+
+RSpec/NestedGroups:
+  Max: 4
+
+RSpec/DescribeClass:
+  Enabled: true
