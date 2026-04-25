@@ -1,0 +1,47 @@
+---
+description: Ruby gem conventions for agent-native-rubygem-template
+globs: lib/**/*.rb,spec/**/*.rb
+alwaysApply: false
+---
+
+# Ruby Gem Conventions
+
+## YARD docs on all public methods
+```ruby
+# ✅ GOOD
+# @param name [String] the user's name
+# @return [String] a greeting
+def greet(name)
+  "Hello, #{name}"
+end
+
+# ❌ BAD — no YARD doc on public method
+def greet(name)
+  "Hello, #{name}"
+end
+```
+
+## Custom errors inherit from MyGem::Error
+```ruby
+# ✅ GOOD
+module MyGem
+  class NotFoundError < Error; end
+end
+
+# ❌ BAD — inheriting from StandardError directly
+class NotFoundError < StandardError; end
+```
+
+## Configuration via MyGem.configuration
+```ruby
+# ✅ GOOD
+MyGem.configure do |config|
+  config.timeout = 30
+end
+
+# ❌ BAD — global variables or class variables for config
+$my_gem_timeout = 30
+```
+
+## Test file mirrors lib file
+lib/my_gem/foo.rb → spec/my_gem/foo_spec.rb (always, no exceptions)
